@@ -116,7 +116,7 @@ pipeline {
 
 		stage('Trigger Satis rebuild') {
 			steps {
-				build job: 'internal/eSoul packages', wait: false
+				build job: 'internal/eSoul Internal/packages-repository/master', wait: false
 			}
 		}
 	}
