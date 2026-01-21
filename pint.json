@@ -1,0 +1,17 @@
+{
+    "preset": "laravel",
+    "rules": {
+        "simplified_null_return": true,
+        "align_multiline_comment": true,
+        "array_indentation": true,
+        "array_syntax": true,
+        "combine_consecutive_issets": true,
+        "combine_consecutive_unsets": true,
+        "declare_strict_types": true,
+        "declare_parentheses": true,
+        "fully_qualified_strict_types": true,
+        "global_namespace_import": true,
+        "ordered_imports": true,
+        "no_unused_imports": true
+    }
+}

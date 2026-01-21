@@ -1,0 +1,31 @@
+{
+  "name": "esoul/laravel-ott-jwt",
+    "description": "OTT JWT package for Laravel",
+    "type": "library",
+  "authors": [
+    {
+      "name": "Tomáš Vojík",
+        "email": "vojik@esoul.cz"
+    }
+  ],
+  "require": {
+    "php": ">=8.5"
+  },
+  "require-dev": {
+    "phpstan/phpstan": "^2",
+    "phpunit/phpunit": "^12",
+    "larastan/larastan": "^3.5",
+    "laravel/pail": "^1.2.2",
+    "laravel/pint": "^1.13"
+  },
+    "autoload": {
+        "psr-4": {
+        "Esoul\\OttJwt\\": "src/"
+        }
+    },
+  "autoload-dev": {
+    "psr-4": {
+      "Esoul\\OttJwt\\Tests\\": "tests/"
+    }
+  }
+}
