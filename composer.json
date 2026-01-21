@@ -2,6 +2,7 @@
   "name": "esoul/laravel-ott-jwt",
   "description": "OTT JWT package for Laravel",
   "type": "library",
+  "license": "GPL-2.0-or-later",
   "authors": [
     {
       "name": "Tomáš Vojík",
