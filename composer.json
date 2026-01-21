@@ -42,7 +42,7 @@
   "extra": {
     "laravel": {
       "providers": [
-        "Esoul\\OttJwt\\OttJwtServiceProvider"
+        "Esoul\\OttJwt\\JwtServiceProvider"
       ],
       "aliases": {
         "JwtParser": "Esoul\\OttJwt\\Facades\\JwtParser"
