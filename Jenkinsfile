@@ -98,14 +98,8 @@ pipeline {
 						docker run --rm \
 							-v \$(pwd):${CONTAINER_WORKSPACE} \
 							-w ${CONTAINER_WORKSPACE} \
-							-e APP_ENV=testing \
-							-e DB_CONNECTION=sqlite \
-							-e DB_DATABASE=:memory: \
 							${TEST_REGISTRY}/${PHP_TEST_IMAGE} \
-							sh -c 'cp .env.example .env && \
-								php artisan key:generate --ansi && \
-								php artisan config:clear && \
-								php artisan test --parallel'
+							sh -c 'composer test'
 					"""
 						}
 					}
