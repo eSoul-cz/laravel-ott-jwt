@@ -19,7 +19,7 @@ final readonly class Token implements JsonSerializable, Stringable
         public string $signature,
     ) {}
 
-    public static function decode(string $data): Token
+    public static function decode(string $data): self
     {
         $parts = explode('.', $data);
         if (count($parts) !== 3) {
@@ -70,7 +70,7 @@ final readonly class Token implements JsonSerializable, Stringable
         $payload = $this->payload->encode();
         $signature = self::base64UrlEncode($this->signature);
 
-        return "{$header}.{$payload}.{$signature}";
+        return "$header.$payload.$signature";
     }
 
     public static function base64UrlEncode(string $data): string

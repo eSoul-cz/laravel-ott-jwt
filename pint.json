@@ -13,5 +13,9 @@
         "global_namespace_import": true,
         "ordered_imports": true,
         "no_unused_imports": true
-    }
+    },
+    "exclude": [
+          "vendor/*",
+          "cache/*"
+      ]
 }

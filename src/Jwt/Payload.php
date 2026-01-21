@@ -42,7 +42,7 @@ final readonly class Payload implements JsonSerializable, Stringable
      *     cap?:array<'client'|numeric, string[]>
      * }  $data
      */
-    protected static function fromDecodedData(array $data): Payload
+    protected static function fromDecodedData(array $data): self
     {
         if (! isset($data['sub'], $data['name'], $data['email'], $data['ins'], $data['iat'], $data['exp'])) {
             throw new InvalidJWTException('Missing required fields in JWT payload');

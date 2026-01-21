@@ -31,7 +31,7 @@ final readonly class Header implements JsonSerializable, Stringable
     /**
      * @param  array{alg?:string,typ?:string}  $data
      */
-    protected static function fromDecodedData(array $data): Header
+    protected static function fromDecodedData(array $data): self
     {
         if (! isset($data['alg'])) {
             throw new InvalidJWTException('Missing "alg" in JWT header');

@@ -1,12 +1,11 @@
 includes:
-    - vendor/larastan/larastan/extension.neon
     - vendor/nesbot/carbon/extension.neon
 
 parameters:
     tmpDir: cache/phpstan
 
     paths:
-        - app/
+        - src/
         - tests/
 
     level: 10
