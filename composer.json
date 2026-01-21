@@ -1,15 +1,17 @@
 {
   "name": "esoul/laravel-ott-jwt",
-    "description": "OTT JWT package for Laravel",
-    "type": "library",
+  "description": "OTT JWT package for Laravel",
+  "type": "library",
   "authors": [
     {
       "name": "Tomáš Vojík",
-        "email": "vojik@esoul.cz"
+      "email": "vojik@esoul.cz"
     }
   ],
   "require": {
-    "php": ">=8.5"
+    "php": ">=8.5",
+    "illuminate/support": "^10.2|^11.0|^12.0",
+    "spatie/laravel-package-tools": "^1.16.1"
   },
   "require-dev": {
     "phpstan/phpstan": "^2",
@@ -18,14 +20,41 @@
     "laravel/pail": "^1.2.2",
     "laravel/pint": "^1.13"
   },
-    "autoload": {
-        "psr-4": {
-        "Esoul\\OttJwt\\": "src/"
-        }
-    },
+  "autoload": {
+    "psr-4": {
+      "Esoul\\OttJwt\\": "src/"
+    }
+  },
   "autoload-dev": {
     "psr-4": {
       "Esoul\\OttJwt\\Tests\\": "tests/"
+    }
+  },
+  "scripts": {
+    "test": [
+      "touch testing.sqlite",
+      "@php artisan config:clear --ansi",
+      "@php artisan test"
+    ],
+    "test-coverage": [
+      "export XDEBUG_MODE=coverage",
+      "touch testing.sqlite",
+      "@php artisan config:clear --ansi",
+      "@php artisan test --coverage"
+    ],
+    "phpstan": "./vendor/bin/phpstan --memory-limit=1G",
+    "pint": "./vendor/bin/pint",
+    "cbf": "./vendor/bin/pint",
+    "cs": "./vendor/bin/pint --test"
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Esoul\\OttJwt\\OttJwtServiceProvider"
+      ],
+      "aliases": {
+        "JwtParser": "Esoul\\OttJwt\\Facades\\JwtParser"
+      }
     }
   }
 }
