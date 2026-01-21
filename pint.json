@@ -16,6 +16,8 @@
     },
     "exclude": [
           "vendor/*",
-          "cache/*"
+          "cache/*",
+          "coverage/*",
+          ".phpunit.cache/*"
       ]
 }
