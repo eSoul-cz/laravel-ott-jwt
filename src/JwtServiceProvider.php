@@ -31,7 +31,8 @@ class JwtServiceProvider extends PackageServiceProvider
         );
     }
 
-    public function packageBooted(): void {
+    public function packageBooted(): void
+    {
         Auth::extend(
             'jwt',
             static fn (Application $app, string $name, array $config) => new JwtGuard(name: $name)

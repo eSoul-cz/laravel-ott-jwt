@@ -17,7 +17,7 @@ class JwtGuard implements Guard
 {
     use GuardHelpers;
 
-    private(set) ?Token $token = null;
+    public private(set) ?Token $token = null;
 
     public function __construct(
         public readonly string $name,
@@ -33,7 +33,7 @@ class JwtGuard implements Guard
         $request = $this->getRequest();
         /** @var string|string[] $token */
         $token = $request?->header('Authorization', '') ?? '';
-        if (!is_string($token)) {
+        if (! is_string($token)) {
             $token = array_first($token);
             assert(is_string($token));
         }

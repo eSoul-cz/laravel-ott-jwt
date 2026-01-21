@@ -1,37 +1,41 @@
 <?php
+
 declare(strict_types=1);
+
 namespace Esoul\OttJwt\Auth;
 
 use Esoul\OttJwt\Jwt\Token;
 use Illuminate\Contracts\Auth\Authenticatable;
 
-readonly class JwtUser implements Authenticatable {
-
+readonly class JwtUser implements Authenticatable
+{
     public function __construct(
         public Token $token,
-    ) {
-    }
+    ) {}
 
     private function normalizeCapability(string $capability): string
     {
-        $prefix = config('jwt.capability_prefix');
-        if ($prefix && !str_starts_with($capability, $prefix)) {
+        $prefix = config('jwt.capability_prefix', '');
+        assert(is_string($prefix));
+        if ($prefix && ! str_starts_with($capability, $prefix)) {
             return $prefix.$capability;
         }
+
         return $capability;
     }
 
     /**
-     * @param non-empty-string $capability
-     * @param int|null $projectId
-     * @return bool
+     * @param  non-empty-string  $capability
      */
     public function can(string $capability, ?int $projectId = null): bool
     {
         $capability = $this->normalizeCapability($capability);
 
         // Check main capabilities
-        if (isset($token->payload->cap['client']) && in_array($capability, $this->token->payload->cap['client'], true)) {
+        if (
+            isset($this->token->payload->cap['client'])
+            && in_array($capability, $this->token->payload->cap['client'], true)
+        ) {
             return true;
         }
 
@@ -44,23 +48,19 @@ readonly class JwtUser implements Authenticatable {
     }
 
     /**
-     * @param non-empty-string[] $capabilities
-     * @param int|null $projectId
-     * @return bool
+     * @param  non-empty-string[]  $capabilities
      */
     public function canAll(array $capabilities, ?int $projectId = null): bool
     {
-        return array_all($capabilities, fn($capability) => $this->can($capability, $projectId));
+        return array_all($capabilities, fn ($capability) => $this->can($capability, $projectId));
     }
 
     /**
-     * @param non-empty-string[] $capabilities
-     * @param int|null $projectId
-     * @return bool
+     * @param  non-empty-string[]  $capabilities
      */
     public function canAny(array $capabilities, ?int $projectId = null): bool
     {
-        return array_any($capabilities, fn($capability) => $this->can($capability, $projectId));
+        return array_any($capabilities, fn ($capability) => $this->can($capability, $projectId));
     }
 
     public function getAuthIdentifierName(): string
