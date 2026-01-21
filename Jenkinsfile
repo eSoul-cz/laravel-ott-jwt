@@ -40,7 +40,7 @@ pipeline {
 							-v \$(pwd):${CONTAINER_WORKSPACE} \
 							-w ${CONTAINER_WORKSPACE} \
 							${TEST_REGISTRY}/${PHP_TEST_IMAGE} \
-							composer install --prefer-dist --no-progress --no-interaction --optimize-autoloader
+							composer update && composer install --prefer-dist --no-progress --no-interaction --optimize-autoloader
 					"""
 				}
 			}
