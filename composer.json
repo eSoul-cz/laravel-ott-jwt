@@ -16,9 +16,9 @@
   "require-dev": {
     "phpstan/phpstan": "^2",
     "phpunit/phpunit": "^12",
-    "larastan/larastan": "^3.5",
     "laravel/pail": "^1.2.2",
-    "laravel/pint": "^1.13"
+    "laravel/pint": "^1.13",
+    "laravel/framework": "^12.48"
   },
   "autoload": {
     "psr-4": {
@@ -31,17 +31,8 @@
     }
   },
   "scripts": {
-    "test": [
-      "touch testing.sqlite",
-      "@php artisan config:clear --ansi",
-      "@php artisan test"
-    ],
-    "test-coverage": [
-      "export XDEBUG_MODE=coverage",
-      "touch testing.sqlite",
-      "@php artisan config:clear --ansi",
-      "@php artisan test --coverage"
-    ],
+    "test": "./vendor/bin/phpunit",
+    "test-coverage": "XDEBUG_MODE=coverage ./vendor/bin/phpunit --coverage-html coverage",
     "phpstan": "./vendor/bin/phpstan --memory-limit=1G",
     "pint": "./vendor/bin/pint",
     "cbf": "./vendor/bin/pint",
