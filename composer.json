@@ -18,8 +18,8 @@
     "phpstan/phpstan": "^2",
     "phpunit/phpunit": "^12",
     "laravel/pail": "^1.2.2",
-    "laravel/pint": "^1.13",
-    "laravel/framework": "^12.48"
+    "laravel/framework": "^12.48",
+    "esoul-cz/coding-standard": "^0.1"
   },
   "autoload": {
     "psr-4": {
@@ -32,12 +32,11 @@
     }
   },
   "scripts": {
-    "test": "./vendor/bin/phpunit",
-    "test-coverage": "XDEBUG_MODE=coverage ./vendor/bin/phpunit --coverage-html coverage",
-    "phpstan": "./vendor/bin/phpstan --memory-limit=1G",
-    "pint": "./vendor/bin/pint",
-    "cbf": "./vendor/bin/pint",
-    "cs": "./vendor/bin/pint --test"
+    "test": "phpunit",
+    "test-coverage": "XDEBUG_MODE=coverage phpunit --coverage-html coverage",
+    "phpstan": "phpstan analyse --memory-limit=1G --no-progress",
+    "cs": "php-cs-fixer fix --dry-run --diff",
+    "cs:fix": "php-cs-fixer fix"
   },
   "extra": {
     "laravel": {
