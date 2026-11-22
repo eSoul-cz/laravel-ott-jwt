@@ -11,14 +11,14 @@ readonly class JwtUser implements Authenticatable
 {
     public function __construct(
         public Token $token,
-    ) {}
+    ) {
+    }
 
-    private function normalizeCapability(string $capability): string
-    {
+    private function normalizeCapability(string $capability): string {
         $prefix = config('jwt.capability_prefix', '');
         assert(is_string($prefix));
         if ($prefix && ! str_starts_with($capability, $prefix)) {
-            return $prefix.$capability;
+            return $prefix . $capability;
         }
 
         return $capability;
@@ -27,8 +27,7 @@ readonly class JwtUser implements Authenticatable
     /**
      * @param  non-empty-string  $capability
      */
-    public function can(string $capability, ?int $projectId = null): bool
-    {
+    public function can(string $capability, ?int $projectId = null): bool {
         $capability = $this->normalizeCapability($capability);
 
         // Check main capabilities
@@ -50,60 +49,51 @@ readonly class JwtUser implements Authenticatable
     /**
      * @param  non-empty-string[]  $capabilities
      */
-    public function canAll(array $capabilities, ?int $projectId = null): bool
-    {
+    public function canAll(array $capabilities, ?int $projectId = null): bool {
         return array_all($capabilities, fn ($capability) => $this->can($capability, $projectId));
     }
 
     /**
      * @param  non-empty-string[]  $capabilities
      */
-    public function canAny(array $capabilities, ?int $projectId = null): bool
-    {
+    public function canAny(array $capabilities, ?int $projectId = null): bool {
         return array_any($capabilities, fn ($capability) => $this->can($capability, $projectId));
     }
 
-    public function getAuthIdentifierName(): string
-    {
+    public function getAuthIdentifierName(): string {
         return 'sub';
     }
 
     /**
      * Gets capabilities from the token payload.
      */
-    public function getAuthIdentifier(): int
-    {
+    public function getAuthIdentifier(): int {
         return $this->token->payload->sub;
     }
 
     /**
      * @return string Empty, not used.
      */
-    public function getAuthPassword(): string
-    {
+    public function getAuthPassword(): string {
         return '';
     }
 
     /**
      * @return string Empty, not used.
      */
-    public function getAuthPasswordName(): string
-    {
+    public function getAuthPasswordName(): string {
         return '';
     }
 
-    public function getRememberToken(): string
-    {
+    public function getRememberToken(): string {
         return '';
     }
 
-    public function setRememberToken(mixed $value): void
-    {
+    public function setRememberToken(mixed $value): void {
         // Not needed
     }
 
-    public function getRememberTokenName(): string
-    {
+    public function getRememberTokenName(): string {
         return '';
     }
 }

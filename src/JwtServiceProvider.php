@@ -13,15 +13,13 @@ use Spatie\LaravelPackageTools\PackageServiceProvider;
 
 class JwtServiceProvider extends PackageServiceProvider
 {
-    public function configurePackage(Package $package): void
-    {
+    public function configurePackage(Package $package): void {
         $package
             ->name('ott-jwt')
             ->hasConfigFile('jwt');
     }
 
-    public function packageRegistered(): void
-    {
+    public function packageRegistered(): void {
         $this->app->singleton(
             TokenParser::class,
             static fn (Application $app) => new TokenParser(
@@ -31,11 +29,10 @@ class JwtServiceProvider extends PackageServiceProvider
         );
     }
 
-    public function packageBooted(): void
-    {
+    public function packageBooted(): void {
         Auth::extend(
             'jwt',
-            static fn (Application $app, string $name, array $config) => new JwtGuard(name: $name)
+            static fn (Application $app, string $name, array $config) => new JwtGuard(name: $name),
         );
     }
 }

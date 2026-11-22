@@ -29,7 +29,8 @@ final readonly class Payload implements JsonSerializable, Stringable
         public DateTimeInterface $iat,
         public DateTimeInterface $exp,
         public array $cap = [],
-    ) {}
+    ) {
+    }
 
     /**
      * @param  array{
@@ -42,16 +43,15 @@ final readonly class Payload implements JsonSerializable, Stringable
      *     cap?:array<'client'|numeric, string[]>
      * }  $data
      */
-    protected static function fromDecodedData(array $data): self
-    {
-        if (! isset($data['sub'], $data['name'], $data['email'], $data['ins'], $data['iat'], $data['exp'])) {
+    protected static function fromDecodedData(array $data): self {
+        if ( ! isset($data['sub'], $data['name'], $data['email'], $data['ins'], $data['iat'], $data['exp'])) {
             throw new InvalidJWTException('Missing required fields in JWT payload');
         }
         try {
             $data['iat'] = is_numeric($data['iat']) ? DateTimeImmutable::createFromTimestamp((int) $data['iat']) : new DateTimeImmutable($data['iat']);
             $data['exp'] = is_numeric($data['exp']) ? DateTimeImmutable::createFromTimestamp((int) $data['exp']) : new DateTimeImmutable($data['exp']);
         } catch (DateMalformedStringException $e) {
-            throw new InvalidJWTException('Invalid date format in JWT payload: '.$e->getMessage(), previous: $e);
+            throw new InvalidJWTException('Invalid date format in JWT payload: ' . $e->getMessage(), previous: $e);
         }
 
         return new Payload(
@@ -61,15 +61,14 @@ final readonly class Payload implements JsonSerializable, Stringable
             ins: (int) $data['ins'],
             iat: $data['iat'],
             exp: $data['exp'],
-            cap: $data['cap'] ?? []
+            cap: $data['cap'] ?? [],
         );
     }
 
     /**
      * @return array<string, mixed>
      */
-    public function jsonSerialize(): array
-    {
+    public function jsonSerialize(): array {
         return [
             'sub' => $this->sub,
             'name' => $this->name,

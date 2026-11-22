@@ -23,32 +23,28 @@ final readonly class TokenParser
         }
     }
 
-    public function parse(string $data): Token
-    {
+    public function parse(string $data): Token {
         return Token::decode($data);
     }
 
-    public function validateHeader(Token $token): bool
-    {
+    public function validateHeader(Token $token): bool {
         return $token->header->alg === 'HS256' && $token->header->typ === 'JWT';
     }
 
-    public function validateExpiration(Token $token): bool
-    {
-        return $token->payload->exp >= new DateTimeImmutable;
+    public function validateExpiration(Token $token): bool {
+        return $token->payload->exp >= new DateTimeImmutable();
     }
 
-    public function validateSignature(Token $token): bool
-    {
+    public function validateSignature(Token $token): bool {
         try {
             $expectedSignature = hash_hmac(
                 'sha256',
-                $token->header->encode().'.'.$token->payload->encode(),
+                $token->header->encode() . '.' . $token->payload->encode(),
                 $this->secret,
-                true
+                true,
             );
         } catch (JsonException $e) {
-            throw new RuntimeException('Error encoding JWT header or payload for signature validation: '.$e->getMessage(), previous: $e);
+            throw new RuntimeException('Error encoding JWT header or payload for signature validation: ' . $e->getMessage(), previous: $e);
         }
 
         return hash_equals($expectedSignature, $token->signature);
@@ -57,23 +53,22 @@ final readonly class TokenParser
     /**
      * @throws InvalidJWTException
      */
-    public function parseAndValidate(string $data): Token
-    {
+    public function parseAndValidate(string $data): Token {
         // Decode the JWT token
         $token = $this->parse($data);
 
         // Validate the signature
-        if (! $this->validateSignature($token)) {
+        if ( ! $this->validateSignature($token)) {
             throw new InvalidJWTException('Invalid JWT signature');
         }
 
         // Validate the header
-        if (! $this->validateHeader($token)) {
+        if ( ! $this->validateHeader($token)) {
             throw new InvalidJWTException('Invalid JWT header');
         }
 
         // Validate the payload
-        if (! $this->validateExpiration($token)) {
+        if ( ! $this->validateExpiration($token)) {
             throw new InvalidJWTException('JWT token has expired');
         }
 

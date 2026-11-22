@@ -6,4 +6,6 @@ namespace Esoul\OttJwt\Jwt\Exceptions;
 
 use InvalidArgumentException;
 
-class InvalidJWTException extends InvalidArgumentException {}
+class InvalidJWTException extends InvalidArgumentException
+{
+}

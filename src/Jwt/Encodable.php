@@ -15,8 +15,7 @@ trait Encodable
      *
      * @throws InvalidJWTException
      */
-    public static function decode(string $data): static
-    {
+    public static function decode(string $data): static {
         try {
             /** @var array<string,mixed> $decodedData */
             $decodedData = json_decode(Token::base64UrlDecode($data) ?: '', true, 512, JSON_THROW_ON_ERROR);
@@ -24,15 +23,14 @@ trait Encodable
             // @phpstan-ignore argument.type
             return static::fromDecodedData($decodedData);
         } catch (Throwable $e) {
-            throw new InvalidJWTException('Cannot decode '.static::class.': '.$e->getMessage(), previous: $e);
+            throw new InvalidJWTException('Cannot decode ' . static::class . ': ' . $e->getMessage(), previous: $e);
         }
     }
 
     /**
      * @param  array<string,mixed>  $data
      */
-    protected static function fromDecodedData(array $data): static
-    {
+    protected static function fromDecodedData(array $data): static {
         // @phpstan-ignore argument.type
         return new static(...$data);
     }
@@ -40,8 +38,7 @@ trait Encodable
     /**
      * @throws JsonException
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->encode();
     }
 
@@ -50,8 +47,7 @@ trait Encodable
      *
      * @throws JsonException
      */
-    public function encode(): string
-    {
+    public function encode(): string {
         return Token::base64UrlEncode(json_encode($this, JSON_THROW_ON_ERROR));
     }
 }
