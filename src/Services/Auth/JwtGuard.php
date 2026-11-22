@@ -22,10 +22,10 @@ class JwtGuard implements Guard
     public function __construct(
         public readonly string $name,
         protected ?Request $request = null,
-    ) {}
+    ) {
+    }
 
-    public function user(): ?Authenticatable
-    {
+    public function user(): ?Authenticatable {
         if ($this->user !== null) {
             return $this->user;
         }
@@ -33,7 +33,7 @@ class JwtGuard implements Guard
         $request = $this->getRequest();
         /** @var string|string[] $token */
         $token = $request?->header('Authorization', '') ?? '';
-        if (! is_string($token)) {
+        if ( ! is_string($token)) {
             $token = array_first($token);
             assert(is_string($token));
         }
@@ -52,9 +52,8 @@ class JwtGuard implements Guard
     /**
      * @param  array{token?:string}  $credentials
      */
-    public function validate(array $credentials = []): bool
-    {
-        if (! isset($credentials['token'])) {
+    public function validate(array $credentials = []): bool {
+        if ( ! isset($credentials['token'])) {
             return false;
         }
         try {
@@ -72,23 +71,20 @@ class JwtGuard implements Guard
         return true;
     }
 
-    public function forgetUser(): static
-    {
+    public function forgetUser(): static {
         $this->token = null;
         $this->user = null;
 
         return $this;
     }
 
-    public function setRequest(?Request $request): JwtGuard
-    {
+    public function setRequest(?Request $request): JwtGuard {
         $this->request = $request;
 
         return $this;
     }
 
-    protected function getRequest(): ?Request
-    {
+    protected function getRequest(): ?Request {
         /** @phpstan-ignore return.type */
         return $this->request ?? app('request');
     }

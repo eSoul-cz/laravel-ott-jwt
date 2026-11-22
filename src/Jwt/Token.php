@@ -17,10 +17,10 @@ final readonly class Token implements JsonSerializable, Stringable
         public Header $header,
         public Payload $payload,
         public string $signature,
-    ) {}
+    ) {
+    }
 
-    public static function decode(string $data): self
-    {
+    public static function decode(string $data): self {
         $parts = explode('.', $data);
         if (count($parts) !== 3) {
             throw new InvalidJWTException('Invalid JWT format');
@@ -37,25 +37,23 @@ final readonly class Token implements JsonSerializable, Stringable
         return new Token($header, $payload, $signature);
     }
 
-    public static function base64UrlDecode(string $data): string|false
-    {
+    public static function base64UrlDecode(string $data): string|false {
         $data .= str_repeat('=', (4 - strlen($data) % 4) % 4); // Add padding
 
         return base64_decode(
             str_replace(
                 ['-', '_'],
                 ['+', '/'],
-                $data
+                $data,
             ),
-            true
+            true,
         );
     }
 
     /**
      * @throws JsonException
      */
-    public function jsonSerialize(): string
-    {
+    public function jsonSerialize(): string {
         return $this->encode();
     }
 
@@ -64,21 +62,19 @@ final readonly class Token implements JsonSerializable, Stringable
      *
      * @throws JsonException
      */
-    public function encode(): string
-    {
+    public function encode(): string {
         $header = $this->header->encode();
         $payload = $this->payload->encode();
         $signature = self::base64UrlEncode($this->signature);
 
-        return "$header.$payload.$signature";
+        return "{$header}.{$payload}.{$signature}";
     }
 
-    public static function base64UrlEncode(string $data): string
-    {
+    public static function base64UrlEncode(string $data): string {
         return str_replace(
             ['+', '/', '='],
             ['-', '_', ''],
-            base64_encode($data)
+            base64_encode($data),
         );
     }
 }

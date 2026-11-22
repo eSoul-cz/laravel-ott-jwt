@@ -23,8 +23,7 @@ class JwtParser extends Facade
     /**
      * @return class-string<TokenParser>
      */
-    protected static function getFacadeAccessor(): string
-    {
+    protected static function getFacadeAccessor(): string {
         return TokenParser::class;
     }
 }
