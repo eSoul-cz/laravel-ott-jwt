@@ -219,3 +219,16 @@ $serialized = json_encode($token);
 $encoded = $token->encode();
 $cast = (string)$token;
 ```
+
+## Development
+
+The package supports PHP 8.5 and newer (`require.php` is `>=8.5`); CI covers PHP 8.5 and 8.6.
+
+```bash
+composer phpstan   # static analysis (PHPStan level 10)
+composer cs        # code style check (esoul-cz/coding-standard, dry run)
+composer cs:fix    # fix code style violations
+composer test      # PHPUnit
+```
+
+The Jenkins pipeline (`phpPackagePipeline`) validates `composer.json` (`composer validate --strict`), runs PHPStan, the code style check, a dependency audit and PHPUnit on PHP 8.5, then re-resolves the dependencies and runs the tests on PHP 8.6. A successful build of `master` triggers a Satis rebuild.
